@@ -17,41 +17,59 @@ The algorithm starts at the root node (selecting some arbitrary node as the root
 
 ### Algorithm:
 
-Step 1: Construct a Graph with Nodes and Edges
+Step 1:
+Start the program.
 
-Step 2: Depth First Search Uses Stack and Recursion
+Step 2:
+Create an empty dictionary graph = {}.
 
-Step 3:Insert a START node to the STACK
+Step 3:
+Input the number of nodes n.
 
-Step 4:Find its Successors Or neighbors and Check whether the node is visited or not
+Step 4:
+For each node, input its name and its comma-separated neighbors.
+Store them in the dictionary.
 
-Step 5:If Not Visited, add it to the STACK. Else Call The Function Again Until No more nodes needs to be visited.
+Step 5:
+Ask for the starting node for DFS.
 
+Step 6:
+Call the dfs(graph, start, visited_list) function.
+
+Step 7:
+Inside DFS:
+
+Add the current node to visited.
+For each neighbor of the node:
+If the neighbor is not visited, recursively call DFS for it.
+
+Step 8:
+When no more neighbors are left, return the visited list.
+
+Step 9:
+Print the DFS traversal order.
 
 ### Program:
 ```
-from collections import defaultdict
-def dfs(graph, start, visited, path):
-    path.append(start)
-    visited[start] = True
-    for neighbour in graph[start]:
-        if not visited[neighbour]:
-            dfs(graph, neighbour, visited, path)
-    return path
+def dfs(graph, node, visited):
+    if node not in visited:
+        visited.append(node)
+        for neighbor in graph.get(node, []):
+            dfs(graph, neighbor, visited)
+    return visited
 
-graph = defaultdict(list)
-n, e = map(int, input("Enter number of nodes and edges (n e): ").split())
-print("Enter edges (u v):")
-for i in range(e):
-    u, v = input().split()
-    graph[u].append(v)
-    graph[v].append(u)
-print("Graph:", dict(graph))
-start = 'A'
-visited = defaultdict(bool)
-path = []
-traversed_path = dfs(graph, start, visited, path)
-print("DFS Traversal Path:", traversed_path)
+graph = {}
+n = int(input("Enter number of nodes: "))
+
+for _ in range(n):
+    node = input("Enter node: ").strip()
+    neighbors = input(f"Enter neighbors of {node} (comma separated): ").split(",")
+    graph[node] = [neighbor.strip() for neighbor in neighbors if neighbor.strip()]
+
+start_node = input("Enter the starting node for DFS: ").strip()
+
+print("DFS Traversal Order:", dfs(graph, start_node, []))
+
 ```
 
 ### Sample Input:
@@ -60,12 +78,19 @@ A C
 B D
 B E
 C E
-D E
 
 ### Sample Output:
 
-Graph: {'A': ['B', 'C'], 'B': ['A', 'D', 'E'], 'C': ['A', 'E'], 'D': ['B', 'E'], 'E': ['B', 'C', 'D']}
+Graph: {'A': ['B', 'C'], 'B': ['A', 'D', 'E'], 'C': ['A', 'E'], 'D': ['B'], 'E': ['B', 'C']}
 
 DFS Traversal Path: ['A', 'B', 'D', 'E', 'C']
 
+### Input:
+<img width="442" height="208" alt="image" src="https://github.com/user-attachments/assets/aa79ff43-8875-4b7e-99ac-25bf59a7d7e3" />
+
+### Output:
+<img width="413" height="25" alt="image" src="https://github.com/user-attachments/assets/dac04867-f5c3-42ff-9105-8138d40e961c" />
+
+
 **Result:**
+Thus the program to implement depth first search of a traversal graph has been executed successfully.
